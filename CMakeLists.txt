@@ -39,9 +39,6 @@ else()
         # EXCLUDE_FROM_ALL # uncomment for a cleaner cmake install output
     )
     FetchContent_MakeAvailable(imgui_bundle)
-
-    # Uncomment the next line if you which to also automatically fetch and compile OpenCV for immvision support
-    # set(IMMVISION_FETCH_OPENCV ON)
 endif()
 
 
@@ -88,3 +85,12 @@ else()
         "/${assets_install_dir}/assets")
     target_compile_definitions(imgui_bundle_example_integration PRIVATE ASSETS_LOCATION="${assets_relative_to_bin}")
 endif()
+
+
+# Optional: cv::Mat interop with ImmVision
+# ========================================
+# ImmVision never links OpenCV. If your app uses OpenCV, and you want to pass cv::Mat to ImmVision,
+# define IMMVISION_HAS_OPENCV and link OpenCV yourself (the conversions are header-only):
+#     find_package(OpenCV REQUIRED)
+#     target_compile_definitions(imgui_bundle_example_integration PRIVATE IMMVISION_HAS_OPENCV)
+#     target_link_libraries(imgui_bundle_example_integration PRIVATE opencv_core)
